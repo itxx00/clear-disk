@@ -8,6 +8,7 @@
 ### 配置
 
 conf/clear.conf
+```
 #
 # 清空文件:  clear    <size(in k)>  <dir pattern>  <file pattern>
 # 删除文件: delete   <1(default in day)|6h|30m>  <dir pattern>  <file pattern>
@@ -20,6 +21,10 @@ conf/clear.conf
 delete 10 /var/log/elasticsearch/ *.log.*
 delete 10 /var/log/hbase/ *.log.*
 delete 10 /var/log/hbase/ *.out.*
+```
 
 ### 执行清理
+
+```
 bin/clear_disk.sh
+```
