@@ -3,7 +3,7 @@
 
 Name:           clear-disk
 Version:        1.0
-Release:        2
+Release:        7
 Summary:        clear-disk for TBDS
 License:        GPL
 
@@ -26,12 +26,13 @@ true
 
 %install
 rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/usr/local/clear-disk
-/bin/cp -r * $RPM_BUILD_ROOT/usr/local/clear-disk
+mkdir -p $RPM_BUILD_ROOT/%{base_install_dir}
+/bin/cp -r * $RPM_BUILD_ROOT/%{base_install_dir}
 
 %pre
 
 %post
+/usr/local/clear-disk/bin/clear_disk.sh start
 
 %preun
 if [ $1 -eq 0 ]; then
@@ -55,5 +56,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Apr 12 2019 itxx00 <itxx00@gmail.com> - 1.0-7
+- new feature for disk hard limit
+
 * Sun Aug 06 2017 itxx00 <itxx00@gmail.com> - 1.0-2
 - init
+
