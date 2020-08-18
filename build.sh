@@ -8,9 +8,10 @@ clean() {
 }
 # build
 clean
+/bin/rm -f ~/rpmbuild/RPMS/noarch/$name-*.rpm
 mkdir $buildroot
 cp -r !($buildroot) $buildroot
-rm -f $buildroot/{build.sh,*.log}
+rm -fr $buildroot/{build.sh,*.log,snap}
 # custom actions here
 chmod +x $buildroot/bin/*
 
