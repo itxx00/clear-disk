@@ -1,13 +1,20 @@
 #!/bin/bash
-sourcedir=$(dirname $(realpath build.sh))
-cd $sourcedir || {
-    echo "cannot change dir to $sourcedir"
-    exit 1
+shopt -s extglob
+buildroot=clear-disk-1.0
+name=clear-disk
+clean() {
+    /bin/rm -fr $buildroot
+    /bin/rm -f $name-*.rpm $buildroot.tar.gz
 }
-/bin/rm -fr ~/rpmbuild/*
-cp -r * ~/rpmbuild/
-cd ~/rpmbuild/SOURCES
-chmod +x clear-disk-1.0/bin/*
-tar czf clear-disk-1.0.tar.gz clear-disk-1.0
-cd ..
-rpmbuild -bb SPECS/clear-disk.spec
+# build
+clean
+mkdir $buildroot
+cp -r !($buildroot) $buildroot
+rm -f $buildroot/{build.sh,*.log}
+# custom actions here
+chmod +x $buildroot/bin/*
+
+tar czf $buildroot.tar.gz $buildroot
+rpmbuild -tb $buildroot.tar.gz
+clean
+/bin/cp ~/rpmbuild/RPMS/noarch/$name-*.rpm .

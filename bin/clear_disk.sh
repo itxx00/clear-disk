@@ -176,11 +176,14 @@ delete_file() {
         Deleteable=yes
     fi
 
-    if ! ls -d "$Dir" >/dev/null 2>&1; then
-        return
+    if ! ls -d $Dir >/dev/null 2>&1; then
+        log_info "$Dir not exists"
+        return 1
+    else
+        log_info "$Dir exists"
     fi
     #log_info "delete $param $Dir $File"
-    find "${Dir}" -path "${Dir}${File}" -type f -$cmd "+$param" -print >"$delete_tmp_file"
+    find ${Dir} -path "${Dir}${File}" -type f -$cmd "+$param" -print >"$delete_tmp_file"
     retval=$?
     if [ $retval -ne 0 ]; then
         log_error "failed to find file"
@@ -230,11 +233,14 @@ clear_file() {
     else
         Cleanable=yes
     fi
-    if ! ls -d "$Dir" >/dev/null 2>&1; then
-        return
+    if ! ls -d $Dir >/dev/null 2>&1; then
+        log_info "$Dir not exists"
+        return 1
+    else
+        log_info "$Dir exists"
     fi
     #log_info "delete $param $Dir $File"
-    find "$Dir" -maxdepth 1 -name "$File" -type f -size +"${param}"k > "$clear_tmp_file"
+    find $Dir -maxdepth 1 -name "$File" -type f -size +"${param}"k > "$clear_tmp_file"
     retval=$?
     if [ $retval -ne 0 ]; then
         log_error "failed to find file"

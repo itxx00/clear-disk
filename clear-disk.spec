@@ -3,8 +3,8 @@
 
 Name:           clear-disk
 Version:        1.0
-Release:        7
-Summary:        clear-disk for TBDS
+Release:        10
+Summary:        common clear-disk
 License:        GPL
 
 Group:          System Environment/Daemons
@@ -16,12 +16,13 @@ BuildArchitectures: noarch
 Provides: clear-disk
 
 %description
-clear-disk for TBDS
+clear-disk for common services
 
 %prep
 %setup -q -n %{name}-%{version}
 
 %build
+rm -f *.spec
 true
 
 %install
@@ -51,12 +52,13 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %config(noreplace) /usr/local/clear-disk/conf/*
+%doc %{base_install_dir}/README.md
 %dir %{base_install_dir}
 %{base_install_dir}/bin/*
 
 
 %changelog
-* Fri Apr 12 2019 itxx00 <itxx00@gmail.com> - 1.0-7
+* Fri Apr 12 2019 itxx00 <itxx00@gmail.com> - 1.0-10
 - new feature for disk hard limit
 
 * Sun Aug 06 2017 itxx00 <itxx00@gmail.com> - 1.0-2
