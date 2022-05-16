@@ -106,7 +106,7 @@ get_limit() {
 
 disk_exceeds_limit() {
     MSG=""
-    for space in $(df -lhP -x tmpfs -x devtmpfs |sed '1d' |awk '{print $5$6}'); do
+    for space in $(df -lhP -t ext2 -t ext3 -t ext4 -t xfs -t btrfs |sed '1d' |awk '{print $5$6}'); do
         used_percent=$(echo "$space" | awk -F% '{print $1}')
         mount_point=$(echo "$space" | awk -F% '{print $2}')
         get_limit "$mount_point"
@@ -128,7 +128,7 @@ disk_exceeds_hardlimit() {
     if [[ -z "$HARDLIMIT" ]] || [[ "$HARDLIMIT" -lt 1 ]]; then
         return 1
     fi
-    for space in $(df -lhP -x tmpfs -x devtmpfs |sed '1d' |awk '{print $5$6}'); do
+    for space in $(df -lhP -t ext2 -t ext3 -t ext4 -t xfs -t btrfs |sed '1d' |awk '{print $5$6}'); do
         used_percent=$(echo "$space" | awk -F% '{print $1}')
         mount_point=$(echo "$space" | awk -F% '{print $2}')
         if [ "$used_percent" -gt "$HARDLIMIT" ]; then
